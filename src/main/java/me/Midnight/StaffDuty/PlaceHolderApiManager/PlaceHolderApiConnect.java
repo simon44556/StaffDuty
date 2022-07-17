@@ -134,9 +134,9 @@ public class PlaceHolderApiConnect extends PlaceholderExpansion {
 
             if (identifier.equals(configHandler.getDutyPlaceholderBtlp())) {
                 if (isDuty) {
-                    return parsePrefix(firstPrefix, configHandler.getConfigKey(ConfigEnums.CHAT_PREFIX_REGEX));
+                    return parsePrefix(firstPrefix, configHandler.getConfigKey(ConfigEnums.BTLP_PREFIX_REGEX));
                 } else {
-                    return configHandler.getEmptyPlaceholder();
+                    return parsePrefix(secondPrefix, configHandler.getConfigKey(ConfigEnums.BTLP_PREFIX_REGEX));
                 }
             }
 

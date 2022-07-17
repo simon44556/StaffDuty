@@ -17,6 +17,10 @@ public class Config {
         }
     }
 
+    public Object getConfigKey(ConfigEnums e) {
+        return manager.getValueForEnum(e);
+    }
+
     public String getNoPermMessage() {
         return manager.getValueForEnum(ConfigEnums.NO_PERM);
     }
@@ -43,5 +47,13 @@ public class Config {
 
     public String getSecondaryTrack() {
         return manager.getValueForEnum(ConfigEnums.SECONDARY);
+    }
+
+    public String getBtlpRegex() {
+        return manager.getValueForEnum(ConfigEnums.BTLP_PREFIX_REGEX);
+    }
+
+    public String getChatRegex() {
+        return manager.getValueForEnum(ConfigEnums.CHAT_PREFIX_REGEX);
     }
 }

@@ -3,6 +3,7 @@ package me.Midnight.StaffDuty.PlaceHolderApiManager;
 import org.bukkit.entity.Player;
 
 import me.Midnight.StaffDuty.ConfigHandler.Config;
+import me.Midnight.StaffDuty.ConfigHandler.ConfigEnums;
 import me.Midnight.StaffDuty.PlayerTracker.StaffType;
 import me.Midnight.StaffDuty.PlayerTracker.TrackManager;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
@@ -125,31 +126,32 @@ public class PlaceHolderApiConnect extends PlaceholderExpansion {
 
             if (identifier.equals(configHandler.getDutyPlaceholder())) {
                 if (isDuty) {
-                    return parsePrefix(firstPrefix);
+                    return parsePrefix(firstPrefix, configHandler.getConfigKey(ConfigEnums.CHAT_PREFIX_REGEX));
                 } else {
-                    return parsePrefix(secondPrefix);
+                    return parsePrefix(secondPrefix, configHandler.getConfigKey(ConfigEnums.CHAT_PREFIX_REGEX));
                 }
             }
 
             if (identifier.equals(configHandler.getDutyPlaceholderBtlp())) {
                 if (isDuty) {
-                    return firstPrefix.replace("#", "&#");
+                    return parsePrefix(firstPrefix, configHandler.getConfigKey(ConfigEnums.CHAT_PREFIX_REGEX));
                 } else {
                     return configHandler.getEmptyPlaceholder();
                 }
             }
 
         } catch (Exception ex) {
-            System.out.println("Exception in StaffDuty");
             ex.printStackTrace();
         }
 
         return "Error in parsing the placeholer";
     }
 
-    private String parsePrefix(String s) {
-        String removeHexFormat = "/(?:#)[0-9a-f]{8}|(?:#)[0-9a-f]{6}|(?:#)[0-9a-f]{4}|(?:#)[0-9a-f]{3}/ig";
-        return s.replaceAll(removeHexFormat, "");
+    private String parsePrefix(String prefix, Object regex) {
+        if (((String) regex).isBlank()) {
+            return prefix;
+        }
+        return prefix.replaceAll((String) regex, "");
     }
 
 }

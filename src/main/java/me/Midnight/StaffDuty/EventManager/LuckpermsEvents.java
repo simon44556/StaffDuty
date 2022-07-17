@@ -32,8 +32,6 @@ public class LuckpermsEvents {
             return;
         }
 
-        System.out.println("syncEvent  ");
-
         Collection<? extends Player> onlinePlayers = Bukkit.getOnlinePlayers();
 
         for (Player p : onlinePlayers) {
@@ -55,7 +53,6 @@ public class LuckpermsEvents {
         if (!e.isUser()) {
             return;
         }
-        System.out.println("rank change event " + e.isUser());
 
         User user = (User) e.getTarget();
         Player player = Bukkit.getPlayer(user.getUniqueId());

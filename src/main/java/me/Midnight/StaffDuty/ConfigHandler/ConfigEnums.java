@@ -1,11 +1,13 @@
 package me.Midnight.StaffDuty.ConfigHandler;
 
-enum ConfigEnums {
+public enum ConfigEnums {
     DEFAULT("", ""),
     TOGGLE("ToggleMessage", "&aYour duty was toggled to "),
     DUTY_PLACEHOLDER("DutyPlaceholder", "player_rank_prefix"),
     BTLP_PLACEHOLER("DutyPlaceholderBtlp", "player_rank_prefix_btlp"),
     NO_PERM("Noperm", "&4No permission to do this"),
+    BTLP_PREFIX_REGEX("BTLPPrefixRegex", ""),
+    CHAT_PREFIX_REGEX("ChatPrefixRegex", ""),
     EMPTY("EmptyPlaceholder", "&7"),
     PRIMARY("PrimaryTrack", "player"),
     SECONDARY("SecondaryTrack", "");

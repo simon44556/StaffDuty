@@ -9,7 +9,7 @@ import me.Midnight.StaffDuty.PlayerTracker.StaffType;
 import me.Midnight.StaffDuty.PlayerTracker.TrackManager;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 
-public class PlaceHolder extends PlaceholderExpansion {
+public class PlaceHolderApiConnect extends PlaceholderExpansion {
     Config configHandler;
     TrackManager trackManager;
 
@@ -21,7 +21,7 @@ public class PlaceHolder extends PlaceholderExpansion {
      * @param plugin
      *               The instance of our plugin.
      */
-    public PlaceHolder(Config configHandler, TrackManager trackManager) {
+    public PlaceHolderApiConnect(Config configHandler, TrackManager trackManager) {
         this.configHandler = configHandler;
         this.trackManager = trackManager;
     }
@@ -75,7 +75,7 @@ public class PlaceHolder extends PlaceholderExpansion {
      */
     @Override
     public String getIdentifier() {
-        return "StaffDuty";
+        return "staffduty";
     }
 
     /**

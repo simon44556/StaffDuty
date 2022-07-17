@@ -12,7 +12,7 @@ public class Config {
     }
 
     private void initiateConfigValues() {
-        for (ConfigEnums e : ConfigEnums.values()) {
+        for (ConfigEnums e : ConfigEnums.getValues()) {
             manager.addKey(e.getKey(), e.getValue());
         }
     }

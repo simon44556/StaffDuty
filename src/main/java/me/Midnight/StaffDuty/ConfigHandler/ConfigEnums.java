@@ -30,4 +30,19 @@ enum ConfigEnums {
     public String toString() {
         return value;
     }
+
+    public static ConfigEnums[] getValues() {
+        ConfigEnums[] returnValues = new ConfigEnums[ConfigEnums.values().length - 1];
+
+        int idx = 0;
+
+        for (ConfigEnums e : ConfigEnums.values()) {
+            if (e == ConfigEnums.DEFAULT) {
+                continue;
+            }
+            returnValues[idx++] = e;
+        }
+
+        return returnValues;
+    }
 }

@@ -14,6 +14,11 @@ import net.luckperms.api.event.node.NodeMutateEvent;
 import net.luckperms.api.model.user.User;
 
 public class LuckpermsEvents {
+    /*
+     * TODO:
+     * - Log manager
+     * - Change hardcoded strings
+     */
     LuckPerms luckPerms;
     TrackManager trackManager;
 

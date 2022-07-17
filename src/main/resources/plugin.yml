@@ -6,6 +6,7 @@ author: MidnightCore
 website: spigotmc.org
 depend:
   - PlaceholderAPI
+  - LuckPerms
 commands:
   toggleduty:
     description: Toggle your dutty

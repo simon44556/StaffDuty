@@ -1,0 +1,15 @@
+main: me.Midnight.StaffDuty.Main
+name: StaffDuty
+version: '1.0'
+description: Toggle staff rank
+author: MidnightCore
+website: spigotmc.org
+depend:
+  - PlaceholderAPI
+softdepend:
+  - CharControlRed
+commands:
+  toggleduty:
+    description: Toggle your dutty
+    usage: /<command>
+    permission: toggleduty.staff

@@ -8,25 +8,27 @@ import org.bukkit.entity.Player;
 public class StaffType {
     Player player;
     boolean isDuty;
-    
+
     List<String> prefixes;
 
-    StaffType(Player player){
+    StaffType(Player player) {
         this.player = player;
         this.isDuty = false;
-        
+
         this.prefixes = new ArrayList<>();
     }
-    StaffType(Player player, boolean isDuty){
+
+    StaffType(Player player, boolean isDuty) {
         this.player = player;
         this.isDuty = isDuty;
-        
+
         this.prefixes = new ArrayList<>();
     }
 
     public Player getPlayer() {
         return player;
     }
+
     public boolean getDuty() {
         return isDuty;
     }
@@ -38,7 +40,7 @@ public class StaffType {
     public void setDuty(boolean isDuty) {
         this.isDuty = isDuty;
     }
-    
+
     public List<String> getPrefixes() {
         return prefixes;
     }

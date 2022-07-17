@@ -13,21 +13,21 @@ enum ConfigEnums {
     private final String value;
     private final String key;
 
-    ConfigEnums (final String key, final String value) {
+    ConfigEnums(final String key, final String value) {
         this.key = key;
         this.value = value;
     }
-    
-    public String getValue(){
+
+    public String getValue() {
         return value;
     }
 
-    public String getKey(){
+    public String getKey() {
         return key;
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return value;
     }
 }

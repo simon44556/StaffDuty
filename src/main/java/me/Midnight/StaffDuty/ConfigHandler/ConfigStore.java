@@ -19,9 +19,9 @@ public class ConfigStore {
         TYPE = type;
     }
 
-    private ConfigEnums findType(String path){
-        for(ConfigEnums e : ConfigEnums.values()){
-            if(e.getKey().equals(path)){
+    private ConfigEnums findType(String path) {
+        for (ConfigEnums e : ConfigEnums.values()) {
+            if (e.getKey().equals(path)) {
                 return e;
             }
         }
@@ -31,9 +31,11 @@ public class ConfigStore {
     public String getPath() {
         return CONFIG_PATH;
     }
+
     public String getValue() {
         return VALUE;
     }
+
     public ConfigEnums getType() {
         return TYPE;
     }

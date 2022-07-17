@@ -12,7 +12,7 @@ public class TrackManager {
     List<StaffType> playerTracker;
     PrefixManager prefixManager;
 
-    TrackManager(Config configHandler) {
+    public TrackManager(Config configHandler) {
         initPlayerTrack();
         prefixManager = new PrefixManager(configHandler);
     }
@@ -20,9 +20,9 @@ public class TrackManager {
     private void initPlayerTrack() {
         playerTracker = new ArrayList<>();
     }
-    
-    public void addPlayer(Player p){
-        if(!contains(p)){
+
+    public void addPlayer(Player p) {
+        if (!contains(p)) {
             playerTracker.add(new StaffType(p, true));
         }
     }
@@ -30,23 +30,23 @@ public class TrackManager {
     public void updateOrAddPrefixes(Player p) {
         boolean updated = false;
 
-        for(StaffType s : playerTracker) {
-            if(s.getPlayer().equals(p)) {
+        for (StaffType s : playerTracker) {
+            if (s.getPlayer().equals(p)) {
                 UpdatePrefix(s);
                 updated = true;
                 break;
             }
         }
-        if(!updated){
-            if(!contains(p)){
+        if (!updated) {
+            if (!contains(p)) {
                 playerTracker.add(new StaffType(p, true));
             }
         }
     }
 
     public void updatePrefixes(Player p) {
-        for(StaffType s : playerTracker) {
-            if(s.getPlayer().equals(p)) {
+        for (StaffType s : playerTracker) {
+            if (s.getPlayer().equals(p)) {
                 UpdatePrefix(s);
                 break;
             }
@@ -54,8 +54,8 @@ public class TrackManager {
     }
 
     public boolean getDuty(Player p) {
-        for(StaffType s : playerTracker) {
-            if(s.getPlayer().equals(p)) {
+        for (StaffType s : playerTracker) {
+            if (s.getPlayer().equals(p)) {
                 return s.getDuty();
             }
         }
@@ -65,21 +65,21 @@ public class TrackManager {
     public void toggleDuty(Player p) {
         boolean added = false;
 
-        for(StaffType s : playerTracker) {
-            if(s.getPlayer().equals(p)) {
+        for (StaffType s : playerTracker) {
+            if (s.getPlayer().equals(p)) {
                 s.toggleDuty();
                 added = true;
                 break;
             }
         }
-        if(!added){
+        if (!added) {
             addPlayer(p);
         }
     }
 
     private boolean contains(Player p) {
-        for(StaffType s : playerTracker) {
-            if(s.getPlayer().equals(p)) {
+        for (StaffType s : playerTracker) {
+            if (s.getPlayer().equals(p)) {
                 return true;
             }
         }
@@ -87,8 +87,8 @@ public class TrackManager {
     }
 
     public StaffType getStaffType(Player p) {
-        for(StaffType s : playerTracker) {
-            if(s.getPlayer().equals(p)) {
+        for (StaffType s : playerTracker) {
+            if (s.getPlayer().equals(p)) {
                 return s;
             }
         }

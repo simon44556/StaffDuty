@@ -1,18 +1,18 @@
 package me.Midnight.StaffDuty.ConfigHandler;
 
-import me.Midnight.StaffDuty.Main;
+import me.Midnight.StaffDuty.StaffDuty;
 
 public class Config {
     ConfigManager manager;
 
-    public Config(Main plugin) {
+    public Config(StaffDuty plugin) {
         manager = new ConfigManager(plugin);
         this.initiateConfigValues();
         manager.saveConfig();
     }
 
     private void initiateConfigValues() {
-        for(ConfigEnums e : ConfigEnums.values()){
+        for (ConfigEnums e : ConfigEnums.values()) {
             manager.addKey(e.getKey(), e.getValue());
         }
     }
@@ -45,4 +45,3 @@ public class Config {
         return manager.getValueForEnum(ConfigEnums.SECONDARY);
     }
 }
-

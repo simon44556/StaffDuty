@@ -7,40 +7,42 @@ public class Config {
 
     public Config(Main plugin) {
         manager = new ConfigManager(plugin);
-
-        for(ConfigEnums e : ConfigEnums.values()){
-            manager.addKey(e.getKey(), e.getValue());
-        }
-
+        this.initiateConfigValues();
         manager.saveConfig();
     }
 
+    private void initiateConfigValues() {
+        for(ConfigEnums e : ConfigEnums.values()){
+            manager.addKey(e.getKey(), e.getValue());
+        }
+    }
+
     public String getNoPermMessage() {
-        return manager.getValueAtPath(ConfigEnums.NO_PERM.getKey());
+        return manager.getValueForEnum(ConfigEnums.NO_PERM);
     }
 
     public String getDutyPlaceholder() {
-        return manager.getValueAtPath(ConfigEnums.DUTY_PLACEHOLDER.getKey());
+        return manager.getValueForEnum(ConfigEnums.DUTY_PLACEHOLDER);
     }
 
     public String getDutyPlaceholderBtlp() {
-        return manager.getValueAtPath(ConfigEnums.BTLP_PLACEHOLER.getKey());
+        return manager.getValueForEnum(ConfigEnums.BTLP_PLACEHOLER);
     }
 
     public String getTogglemessage() {
-        return manager.getValueAtPath(ConfigEnums.TOGGLE.getKey());
+        return manager.getValueForEnum(ConfigEnums.TOGGLE);
     }
 
     public String getEmptyPlaceholder() {
-        return manager.getValueAtPath(ConfigEnums.EMPTY.getKey());
+        return manager.getValueForEnum(ConfigEnums.EMPTY);
     }
 
     public String getPrimaryTrack() {
-        return manager.getValueAtPath(ConfigEnums.PRIMARY.getKey());
+        return manager.getValueForEnum(ConfigEnums.PRIMARY);
     }
 
     public String getSecondaryTrack() {
-        return manager.getValueAtPath(ConfigEnums.SECONDARY.getKey());
+        return manager.getValueForEnum(ConfigEnums.SECONDARY);
     }
 }
 

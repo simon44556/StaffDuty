@@ -11,7 +11,9 @@ import me.Midnight.StaffDuty.Main;
 
 public class ConfigManager {
     private FileConfiguration config;
-    private Main _plugin;
+
+    //TODO: Check if this is needed
+    private Main _plugin; 
 
     List<ConfigStore> configKeys;
 
@@ -22,11 +24,24 @@ public class ConfigManager {
     }
 
     public void addKey(ConfigStore key) {
-        configKeys.add(key);
+        configKeys.add(generateConfigKey(key.getPath(), key.getValue(), key.getType()));
     }
 
     public void addKey(String configPath, String value) {
-        configKeys.add(new ConfigStore(configPath, value));
+        configKeys.add(generateConfigKey(configPath, value));
+    }
+
+    public void addKey(ConfigEnums e) {
+        configKeys.add(generateConfigKey(e.getKey(), e.getValue(), e));
+    }
+
+    public String getValueForEnum(ConfigEnums e){
+        for(ConfigStore val : configKeys) {
+            if(val.getType() == e) {
+                return val.getValue();
+            }
+        }
+        return null;
     }
 
     public String getValueAtPath(String path){
@@ -39,11 +54,19 @@ public class ConfigManager {
     }
 
     public ConfigStore generateConfigKey(String path, String value){
-        String val = configGetVal(path);
+        final String val = configGetVal(path);
         if(val == null){
             return new ConfigStore(path, value);
         }
         return new ConfigStore(path, val);
+    }
+
+    public ConfigStore generateConfigKey(String path, String value, ConfigEnums type){
+        final String val = configGetVal(path);
+        if(val == null){
+            return new ConfigStore(path, value, type);
+        }
+        return new ConfigStore(path, val, type);
     }
 
     public String configGetVal(String path) {
@@ -60,7 +83,7 @@ public class ConfigManager {
     }
 
     private Map<String, Object> toMap(List<ConfigStore> values){
-        Map<String, Object> retunValue = new HashMap<String, Object>();
+        final Map<String, Object> retunValue = new HashMap<>();
 
         for(ConfigStore obj : values){
             retunValue.put(obj.getPath(), obj.getValue());

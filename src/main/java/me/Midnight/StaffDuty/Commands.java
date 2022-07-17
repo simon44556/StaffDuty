@@ -6,22 +6,27 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class Commands implements CommandExecutor {
-    private Main plugin;
+import me.Midnight.StaffDuty.ConfigHandler.Config;
+import me.Midnight.StaffDuty.PlayerTracker.TrackManager;
 
-    public Commands(Main pl){
-        this.plugin = pl;
+public class Commands implements CommandExecutor {
+    private TrackManager trackManager;
+    private Config configHandler;
+
+    public Commands(TrackManager trackManager, Config configHandler){
+        this.trackManager = trackManager;
+        this.configHandler = configHandler;
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if(sender instanceof Player){
             if(sender.hasPermission("toggleduty.staff")){
-                plugin.toggleDuty((Player)sender);
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&',plugin.getConfiguration().getTogglemessage() +
-                        plugin.getDuty((Player)sender)));
+                trackManager.toggleDuty((Player)sender);
+
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', configHandler.getTogglemessage() + trackManager.getDuty((Player)sender)));
             }else{
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfiguration().getNoPermMessage()));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', configHandler.getNoPermMessage()));
             }
         }
         return true;

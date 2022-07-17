@@ -1,6 +1,7 @@
 package me.Midnight.StaffDuty.ConfigHandler;
 
 enum ConfigEnums {
+    DEFAULT("", ""),
     TOGGLE("ToggleMessage", "&aYour duty was toggled to "),
     DUTY_PLACEHOLDER("DutyPlaceholder", "player_rank_prefix"),
     BTLP_PLACEHOLER("DutyPlaceholderBtlp", "player_rank_prefix_btlp"),
@@ -20,8 +21,13 @@ enum ConfigEnums {
     public String getValue(){
         return value;
     }
-    
+
     public String getKey(){
         return key;
+    }
+
+    @Override
+    public String toString(){
+        return value;
     }
 }

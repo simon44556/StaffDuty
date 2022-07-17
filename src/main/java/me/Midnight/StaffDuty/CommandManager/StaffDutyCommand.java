@@ -21,7 +21,7 @@ public class StaffDutyCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
-            if (sender.hasPermission("toggleduty.staff")) {
+            if (sender.hasPermission("toggleduty.staff") || sender.isOp()) {
                 trackManager.toggleDuty((Player) sender);
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
                         configHandler.getTogglemessage() + trackManager.getDuty((Player) sender)));

@@ -5,6 +5,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import me.Midnight.StaffDuty.CommandManager.CommandManager;
 import me.Midnight.StaffDuty.ConfigHandler.Config;
+import me.Midnight.StaffDuty.EventManager.EventManager;
 import me.Midnight.StaffDuty.PlaceHolderApiManager.PlaceHolderApiConnect;
 import me.Midnight.StaffDuty.PlayerTracker.TrackManager;
 
@@ -13,12 +14,14 @@ public class StaffDuty extends JavaPlugin {
     TrackManager trackManager;
     CommandManager commandManager;
     PlaceHolderApiConnect placeHolderApiConnect;
+    EventManager eventManager;
 
     @Override
     public void onEnable() {
         configHandler = new Config(this);
         trackManager = new TrackManager(configHandler);
         commandManager = new CommandManager(this);
+        eventManager = new EventManager(this);
 
         initPlaceHolerApi();
     }

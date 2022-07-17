@@ -1,7 +1,5 @@
 package me.Midnight.StaffDuty.PlaceHolderApiManager;
 
-import java.util.Collection;
-
 import org.bukkit.entity.Player;
 
 import me.Midnight.StaffDuty.ConfigHandler.Config;
@@ -119,27 +117,23 @@ public class PlaceHolderApiConnect extends PlaceholderExpansion {
             if (type == null) {
                 return configHandler.getEmptyPlaceholder();
             }
-            Collection<String> prefixes = type.getPrefixes();
 
-            String removeHexFormat = "/(?:#)[0-9a-f]{8}|(?:#)[0-9a-f]{6}|(?:#)[0-9a-f]{4}|(?:#)[0-9a-f]{3}/ig";
+            String firstPrefix = type.getPrefix(0);
+            String secondPrefix = type.getPrefix(1);
 
             boolean isDuty = trackManager.getDuty(player);
 
             if (identifier.equals(configHandler.getDutyPlaceholder())) {
                 if (isDuty) {
-                    return (String) prefixes.toArray()[0].toString().replaceAll(removeHexFormat, "");
+                    return parsePrefix(firstPrefix);
                 } else {
-                    if (prefixes.size() > 1)
-                        return (String) prefixes.toArray()[1].toString().replaceAll(removeHexFormat, "");
-                    else
-                        return (String) prefixes.toArray()[0].toString().replaceAll(removeHexFormat, "");
+                    return parsePrefix(secondPrefix);
                 }
             }
 
             if (identifier.equals(configHandler.getDutyPlaceholderBtlp())) {
                 if (isDuty) {
-                    String s = (String) prefixes.toArray()[0];
-                    return s.replaceAll("#", "&#");
+                    return firstPrefix.replace("#", "&#");
                 } else {
                     return configHandler.getEmptyPlaceholder();
                 }
@@ -147,9 +141,15 @@ public class PlaceHolderApiConnect extends PlaceholderExpansion {
 
         } catch (Exception ex) {
             System.out.println("Exception in StaffDuty");
+            ex.printStackTrace();
         }
 
-        return null;
+        return "Error in parsing the placeholer";
+    }
+
+    private String parsePrefix(String s) {
+        String removeHexFormat = "/(?:#)[0-9a-f]{8}|(?:#)[0-9a-f]{6}|(?:#)[0-9a-f]{4}|(?:#)[0-9a-f]{3}/ig";
+        return s.replaceAll(removeHexFormat, "");
     }
 
 }

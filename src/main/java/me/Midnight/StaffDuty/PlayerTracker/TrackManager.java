@@ -24,6 +24,7 @@ public class TrackManager {
     public void addPlayer(Player p) {
         if (!contains(p)) {
             playerTracker.add(new StaffType(p, true));
+            updateOrAddPrefixes(p);
         }
     }
 
@@ -34,7 +35,6 @@ public class TrackManager {
             if (s.getPlayer().equals(p)) {
                 UpdatePrefix(s);
                 updated = true;
-                break;
             }
         }
         if (!updated) {
@@ -48,7 +48,6 @@ public class TrackManager {
         for (StaffType s : playerTracker) {
             if (s.getPlayer().equals(p)) {
                 UpdatePrefix(s);
-                break;
             }
         }
     }

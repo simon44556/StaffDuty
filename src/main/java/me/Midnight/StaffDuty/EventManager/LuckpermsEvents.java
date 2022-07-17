@@ -28,40 +28,50 @@ public class LuckpermsEvents {
     }
 
     public void syncEvent(LogReceiveEvent e) {
-        if (e.getEntry().getTarget().getType() == Action.Target.Type.USER) {
-            Collection<? extends Player> onlinePlayers = Bukkit.getOnlinePlayers();
-            for (Player p : onlinePlayers) {
-                System.out.println("user " + p.getName());
-                User user = luckPerms.getUserManager().getUser(p.getUniqueId());
-                if (user != null && p.hasPermission("toggleduty.staff")) {
-                    System.out.println("Sync update / add");
-                    trackManager.updateOrAddPrefixes(Bukkit.getPlayer(user.getUniqueId()));
-                } else if (user != null) {
-                    System.out.println("Sync update");
-                    trackManager.updatePrefixes(Bukkit.getPlayer(user.getUniqueId()));
-                }
+        if (e.getEntry().getTarget().getType() != Action.Target.Type.USER) {
+            return;
+        }
+
+        System.out.println("syncEvent  ");
+
+        Collection<? extends Player> onlinePlayers = Bukkit.getOnlinePlayers();
+
+        for (Player p : onlinePlayers) {
+            User user = luckPerms.getUserManager().getUser(p.getUniqueId());
+
+            if (user == null) {
+                continue;
+            }
+
+            if (p.hasPermission("toggleduty.staff") || p.isOp()) {
+                trackManager.updateOrAddPrefixes(Bukkit.getPlayer(user.getUniqueId()));
+            } else {
+                trackManager.updatePrefixes(Bukkit.getPlayer(user.getUniqueId()));
             }
         }
     }
 
     public void rankChange(NodeMutateEvent e) {
-        if (e.isUser()) {
-            User user = (User) e.getTarget();
-            Player player = Bukkit.getPlayer(user.getUniqueId());
+        if (!e.isUser()) {
+            return;
+        }
+        System.out.println("rank change event " + e.isUser());
 
-            if (player == null) {
-                return;
-            }
+        User user = (User) e.getTarget();
+        Player player = Bukkit.getPlayer(user.getUniqueId());
 
-            if (player.isOnline()
-                    && user.getCachedData().getPermissionData().checkPermission("toggleduty.staff").asBoolean()
-                    || player.isOp()) {
-                trackManager.updateOrAddPrefixes(player);
-            }
+        if (player == null) {
+            return;
+        }
 
-            else if (user != null && player != null && player.isOnline()) {
-                trackManager.updatePrefixes(player);
-            }
+        if (player.isOnline()
+                && user.getCachedData().getPermissionData().checkPermission("toggleduty.staff").asBoolean()
+                || player.isOp()) {
+            trackManager.updateOrAddPrefixes(player);
+        }
+
+        else if (player.isOnline()) {
+            trackManager.updatePrefixes(player);
         }
     }
 }

@@ -13,7 +13,7 @@ public class StaffType {
 
     StaffType(Player player) {
         this.player = player;
-        this.isDuty = false;
+        this.isDuty = true;
 
         this.prefixes = new ArrayList<>();
     }
@@ -43,6 +43,13 @@ public class StaffType {
 
     public List<String> getPrefixes() {
         return prefixes;
+    }
+
+    public String getPrefix(int idx) {
+        if (prefixes.size() > idx) {
+            return prefixes.get(idx);
+        }
+        return "No prefix found";
     }
 
     public void setPrefixes(List<String> prefixes) {

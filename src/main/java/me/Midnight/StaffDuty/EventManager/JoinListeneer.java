@@ -15,10 +15,8 @@ public class JoinListeneer implements Listener {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
-        //TODO: Change hardcoded strings
-        if (e.getPlayer().hasPermission("toggleduty.staff") || e.getPlayer().isOp()) {
-            trackManager.addPlayer(e.getPlayer());
-        }
+        // Track all
+        trackManager.addPlayer(e.getPlayer());
     }
 
 }

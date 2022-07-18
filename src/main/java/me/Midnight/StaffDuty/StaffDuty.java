@@ -16,6 +16,15 @@ public class StaffDuty extends JavaPlugin {
     PlaceHolderApiConnect placeHolderApiConnect;
     EventManager eventManager;
 
+    /*
+     * TODO:
+     * - Add permission to config
+     * - Add alis to config
+     * - Add multiple tracks
+     * - Make placeholders dynamic
+     * - Improve regex filter
+     */
+
     @Override
     public void onEnable() {
         configHandler = new Config(this);

@@ -7,12 +7,14 @@ import net.luckperms.api.event.log.LogReceiveEvent;
 import net.luckperms.api.event.node.NodeMutateEvent;
 
 public class EventManager {
-    private JoinListeneer joinListeneer;
+    private JoinListener joinListeneer;
+    private LeaveListener leaveListener;
     private LuckpermsEvents luckpermsEvents;
 
     public EventManager(StaffDuty plugin) {
-        joinListeneer = new JoinListeneer(plugin.getTrackManager());
+        joinListeneer = new JoinListener(plugin.getTrackManager());
         luckpermsEvents = new LuckpermsEvents(plugin.getTrackManager());
+        leaveListener = new LeaveListener(plugin.getTrackManager());
 
         registerBukkitEvents(plugin);
         subscribeToLuckpermsEvents(plugin);
@@ -20,6 +22,7 @@ public class EventManager {
 
     private void registerBukkitEvents(StaffDuty plugin) {
         plugin.getServer().getPluginManager().registerEvents(joinListeneer, plugin);
+        plugin.getServer().getPluginManager().registerEvents(leaveListener, plugin);
     }
 
     private void subscribeToLuckpermsEvents(StaffDuty plugin) {

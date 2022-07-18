@@ -30,6 +30,16 @@ public class TrackManager {
         updateOrAddPrefixes(p);
     }
 
+    public void removePlayer(Player p) {
+        StaffType staffType = getStaffType(p);
+
+        if (staffType == null) {
+            return;
+        }
+
+        playerTracker.remove(staffType);
+    }
+
     public void updateOrAddPrefixes(Player p) {
         for (StaffType s : playerTracker) {
             if (!s.getPlayer().equals(p)) {
@@ -95,7 +105,7 @@ public class TrackManager {
                 return s;
             }
         }
-        
+
         return null;
     }
 }

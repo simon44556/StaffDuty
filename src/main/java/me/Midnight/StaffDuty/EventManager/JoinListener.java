@@ -6,10 +6,10 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 import me.Midnight.StaffDuty.PlayerTracker.TrackManager;
 
-public class JoinListeneer implements Listener {
+public class JoinListener implements Listener {
     TrackManager trackManager;
 
-    public JoinListeneer(TrackManager trackManager) {
+    public JoinListener(TrackManager trackManager) {
         this.trackManager = trackManager;
     }
 

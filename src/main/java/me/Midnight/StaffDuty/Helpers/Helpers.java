@@ -21,10 +21,7 @@ public final class Helpers {
     }
 
     public static void SendPlayerMessage(CommandSender p, String m) {
-        if (p == null || m == null) {
-            return;
-        }
-        p.sendMessage(ChatColor.translateAlternateColorCodes('&', m));
+        SendPlayerMessage((Player) p, m);
     }
 
     public static void SendConsoleMessage(String m) {

@@ -7,6 +7,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import me.Midnight.StaffDuty.ConfigHandler.Config;
+import me.Midnight.StaffDuty.ConfigHandler.ConfigEnums;
+import me.Midnight.StaffDuty.Helpers.Helpers;
 import me.Midnight.StaffDuty.PlayerTracker.TrackManager;
 
 public class StaffDutyCommand implements CommandExecutor {
@@ -23,10 +25,10 @@ public class StaffDutyCommand implements CommandExecutor {
         if (sender instanceof Player) {
             if (sender.hasPermission("toggleduty.staff") || sender.isOp()) {
                 trackManager.toggleDuty((Player) sender);
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                        configHandler.getTogglemessage() + trackManager.getDuty((Player) sender)));
+                Helpers.SendPlayerMessage(sender,
+                        configHandler.getConfigKey(ConfigEnums.TOGGLE) + trackManager.getDuty((Player) sender));
             } else {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', configHandler.getNoPermMessage()));
+                Helpers.SendPlayerMessage(sender, configHandler.getConfigKey(ConfigEnums.NO_PERM));
             }
         }
         return true;

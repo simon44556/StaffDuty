@@ -12,13 +12,9 @@ import me.Midnight.StaffDuty.StaffDuty;
 public class ConfigManager {
     private FileConfiguration config;
 
-    // TODO: Check if this is needed
-    private StaffDuty _plugin;
-
     List<ConfigStore> configKeys;
 
     public ConfigManager(StaffDuty plugin) {
-        _plugin = plugin;
         config = plugin.getConfig();
         configKeys = new ArrayList<ConfigStore>();
     }
@@ -79,7 +75,7 @@ public class ConfigManager {
     public void saveConfig() {
         config.addDefaults(toMap(configKeys));
         config.options().copyDefaults(true);
-        _plugin.saveConfig();
+        
     }
 
     private Map<String, Object> toMap(List<ConfigStore> values) {

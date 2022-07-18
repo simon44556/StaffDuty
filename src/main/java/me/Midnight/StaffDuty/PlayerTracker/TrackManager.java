@@ -22,34 +22,39 @@ public class TrackManager {
     }
 
     public void addPlayer(Player p) {
-        if (!contains(p)) {
-            playerTracker.add(new StaffType(p, true));
-            updateOrAddPrefixes(p);
+        if (contains(p)) {
+            return;
         }
+
+        playerTracker.add(new StaffType(p, true));
+        updateOrAddPrefixes(p);
     }
 
     public void updateOrAddPrefixes(Player p) {
-        boolean updated = false;
-
         for (StaffType s : playerTracker) {
-            if (s.getPlayer().equals(p)) {
-                UpdatePrefix(s);
-                updated = true;
+            if (!s.getPlayer().equals(p)) {
+                continue;
             }
+            UpdatePrefix(s);
+            return;
         }
-        if (!updated) {
-            if (!contains(p)) {
-                playerTracker.add(new StaffType(p, true));
-            }
-        }
+
+        addPlayer(p);
     }
 
     public void updatePrefixes(Player p) {
         for (StaffType s : playerTracker) {
-            if (s.getPlayer().equals(p)) {
-                UpdatePrefix(s);
+            if (!s.getPlayer().equals(p)) {
+                continue;
             }
+            UpdatePrefix(s);
+            return;
         }
+    }
+
+    private void UpdatePrefix(StaffType s) {
+        s.setDisplayPrefixes(prefixManager.getChatPrefixes(s.getPlayer()));
+        s.setPrefixPerTrack(prefixManager.getPrefixPerTrack(s.getPlayer()));
     }
 
     public boolean getDuty(Player p) {
@@ -58,22 +63,20 @@ public class TrackManager {
                 return s.getDuty();
             }
         }
+
         return false;
     }
 
     public void toggleDuty(Player p) {
-        boolean added = false;
-
         for (StaffType s : playerTracker) {
-            if (s.getPlayer().equals(p)) {
-                s.toggleDuty();
-                added = true;
-                break;
+            if (!s.getPlayer().equals(p)) {
+                continue;
             }
+            s.toggleDuty();
+            return;
         }
-        if (!added) {
-            addPlayer(p);
-        }
+
+        addPlayer(p);
     }
 
     private boolean contains(Player p) {
@@ -82,6 +85,7 @@ public class TrackManager {
                 return true;
             }
         }
+
         return false;
     }
 
@@ -91,11 +95,7 @@ public class TrackManager {
                 return s;
             }
         }
+        
         return null;
-    }
-
-    private void UpdatePrefix(StaffType s) {
-        List<String> prefixes = prefixManager.updatePrefixes(s.getPlayer());
-        s.setPrefixes(prefixes);
     }
 }

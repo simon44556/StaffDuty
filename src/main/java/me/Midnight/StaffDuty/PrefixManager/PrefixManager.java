@@ -2,7 +2,10 @@ package me.Midnight.StaffDuty.PrefixManager;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.bukkit.entity.Player;
 
@@ -18,6 +21,7 @@ import net.luckperms.api.metastacking.MetaStackDefinition;
 import net.luckperms.api.metastacking.MetaStackElement;
 import net.luckperms.api.model.user.User;
 import net.luckperms.api.query.QueryOptions;
+import net.luckperms.api.track.Track;
 
 public class PrefixManager {
     private final String LUCKPERMS_SORT_ORDER = "highest_on_track_";
@@ -30,59 +34,78 @@ public class PrefixManager {
         luckPerms = LuckPermsProvider.get();
     }
 
-    public String getPrefixesLuck(User user, QueryOptions queryOptions) {
-        String prefix = "";
+    public Map<String, String> getPrefixPerTrack(Player p) {
+        Map<String, String> finalMaping = new HashMap<>();
 
-        CachedDataManager userdata = user.getCachedData();
+        List<String> allTracks = getAllTracks();
 
-        MetaStackElement primary = luckPerms.getMetaStackFactory()
-                .fromString(LUCKPERMS_SORT_ORDER + configHandler.getPrimaryTrack()).orElse(null);
-        MetaStackElement secondary = luckPerms.getMetaStackFactory()
-                .fromString(LUCKPERMS_SORT_ORDER + configHandler.getSecondaryTrack()).orElse(null);
-
-        if (primary != null) {
-            prefix = getPrefix(queryOptions, primary, userdata);
-        }
-        if (secondary != null && prefix.equals("")) {
-            prefix = getPrefix(queryOptions, primary, userdata);
+        for (String track : allTracks) {
+            finalMaping.put(track, getPrefixForTrack(p, track));
         }
 
-        return prefix;
+        return finalMaping;
     }
 
-    private String getPrefix(QueryOptions queryOptions, MetaStackElement m, CachedDataManager userdata) {
-        MetaStackDefinition stackDefinition = luckPerms.getMetaStackFactory().createDefinition(ImmutableList.of(m),
+    public Collection<String> getChatPrefixes(Player p) {
+        User user = luckPerms.getUserManager().getUser(p.getUniqueId());
+
+        if (user == null) {
+            return new ArrayList<>();
+        }
+
+        return user.getCachedData().getMetaData().getPrefixes().values();
+    }
+
+
+    
+    private List<String> getAllTracks() {
+        Set<Track> loadedTracks = luckPerms.getTrackManager().getLoadedTracks();
+        List<String> tracksAsString;
+
+        if (loadedTracks.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        tracksAsString = new ArrayList<>();
+
+        for (Track el : loadedTracks) {
+            tracksAsString.add(el.getName());
+        }
+
+        return tracksAsString;
+    }
+
+    private String getPrefixForTrack(Player player, String track) {
+        CachedDataManager userdata = luckPerms.getUserManager().getUser(player.getUniqueId()).getCachedData();
+
+        MetaStackElement currentTrackMetaElements = luckPerms.getMetaStackFactory()
+                .fromString(LUCKPERMS_SORT_ORDER + track)
+                .orElse(null);
+
+        if (currentTrackMetaElements == null) {
+            return "";
+        }
+
+        return getPrefix(player, currentTrackMetaElements, userdata);
+    }
+
+    private String getPrefix(Player user, MetaStackElement metaStackElement, CachedDataManager userdata) {
+        QueryOptions queryOptions = luckPerms.getContextManager().getQueryOptions(user);
+
+        MetaStackDefinition stackDefinition = luckPerms.getMetaStackFactory().createDefinition(
+                ImmutableList.of(metaStackElement),
                 DuplicateRemovalFunction.RETAIN_ALL, "", "", "");
+
         queryOptions = buildQueryStack(queryOptions, stackDefinition);
+
         return Strings.nullToEmpty(userdata.getMetaData(queryOptions).getPrefix());
     }
 
-    private QueryOptions buildQueryStack(QueryOptions q, MetaStackDefinition s) {
-        return q.toBuilder()
-                .option(MetaStackDefinition.PREFIX_STACK_KEY, s)
-                .option(MetaStackDefinition.SUFFIX_STACK_KEY, s)
+    private QueryOptions buildQueryStack(QueryOptions queryOptions, MetaStackDefinition metaStackElement) {
+        return queryOptions.toBuilder()
+                .option(MetaStackDefinition.PREFIX_STACK_KEY, metaStackElement)
+                .option(MetaStackDefinition.SUFFIX_STACK_KEY, metaStackElement)
                 .build();
     }
 
-    public List<String> updatePrefixes(Player p) {
-
-        QueryOptions queryOptions = luckPerms.getContextManager().getQueryOptions(p);
-
-        User user = luckPerms.getUserManager().getUser(p.getUniqueId());
-
-        if (user == null)
-            return new ArrayList<>();
-
-        Collection<String> tmp = user.getCachedData().getMetaData().getPrefixes().values();
-
-        if (tmp.isEmpty()) {
-            return new ArrayList<>();
-        }
-
-        List<String> prefixes = new ArrayList<>();
-        prefixes.add((String) tmp.toArray()[0]);
-
-        prefixes.add(getPrefixesLuck(user, queryOptions));
-        return prefixes;
-    }
 }

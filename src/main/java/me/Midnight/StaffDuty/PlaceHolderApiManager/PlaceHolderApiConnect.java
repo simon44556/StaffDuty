@@ -108,35 +108,36 @@ public class PlaceHolderApiConnect extends PlaceholderExpansion {
      */
     @Override
     public String onPlaceholderRequest(Player player, String identifier) {
+        String emptyString = configHandler.getConfigKey(ConfigEnums.EMPTY);
         if (player == null) {
-            return configHandler.getEmptyPlaceholder();
+            return emptyString;
         }
 
         try {
             StaffType type = trackManager.getStaffType(player);
 
             if (type == null) {
-                return configHandler.getEmptyPlaceholder();
+                return emptyString;
             }
 
-            String firstPrefix = type.getPrefix(0);
-            String secondPrefix = type.getPrefix(1);
+            String normalPrefix = type.getDutyPrefix();
+            String nonDutyPrefix = type.getPrefixForTrack(configHandler.getConfigKey(ConfigEnums.PRIMARY));
 
             boolean isDuty = trackManager.getDuty(player);
 
-            if (identifier.equals(configHandler.getDutyPlaceholder())) {
+            if (identifier.equals(configHandler.getConfigKey(ConfigEnums.DUTY_PLACEHOLDER))) {
                 if (isDuty) {
-                    return parsePrefix(firstPrefix, configHandler.getConfigKey(ConfigEnums.CHAT_PREFIX_REGEX));
+                    return parsePrefix(normalPrefix, configHandler.getConfigKey(ConfigEnums.CHAT_PREFIX_REGEX));
                 } else {
-                    return parsePrefix(secondPrefix, configHandler.getConfigKey(ConfigEnums.CHAT_PREFIX_REGEX));
+                    return parsePrefix(nonDutyPrefix, configHandler.getConfigKey(ConfigEnums.CHAT_PREFIX_REGEX));
                 }
             }
 
-            if (identifier.equals(configHandler.getDutyPlaceholderBtlp())) {
+            if (identifier.equals(configHandler.getConfigKey(ConfigEnums.BTLP_PLACEHOLER))) {
                 if (isDuty) {
-                    return parsePrefix(firstPrefix, configHandler.getConfigKey(ConfigEnums.BTLP_PREFIX_REGEX));
+                    return parsePrefix(normalPrefix, configHandler.getConfigKey(ConfigEnums.BTLP_PREFIX_REGEX));
                 } else {
-                    return parsePrefix(secondPrefix, configHandler.getConfigKey(ConfigEnums.BTLP_PREFIX_REGEX));
+                    return parsePrefix(nonDutyPrefix, configHandler.getConfigKey(ConfigEnums.BTLP_PREFIX_REGEX));
                 }
             }
 

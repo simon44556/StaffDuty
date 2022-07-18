@@ -9,8 +9,7 @@ public enum ConfigEnums {
     BTLP_PREFIX_REGEX("BTLPPrefixRegex", ""),
     CHAT_PREFIX_REGEX("ChatPrefixRegex", ""),
     EMPTY("EmptyPlaceholder", "&7"),
-    PRIMARY("PrimaryTrack", "player"),
-    SECONDARY("SecondaryTrack", "");
+    PRIMARY("NonDutyTrack", "player");
 
     private final String value;
     private final String key;

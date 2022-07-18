@@ -10,21 +10,21 @@ public class StaffType {
     Player player;
     boolean isDuty;
 
-    Collection<String> onDutyPrefix;
+    String onDutyPrefix;
     Map<String, String> prefixPerTrack;
 
     StaffType(Player player) {
         this.player = player;
         this.isDuty = true;
 
-        this.onDutyPrefix = new ArrayList<>();
+        this.onDutyPrefix = "";
     }
 
     StaffType(Player player, boolean isDuty) {
         this.player = player;
         this.isDuty = isDuty;
 
-        this.onDutyPrefix = new ArrayList<>();
+        this.onDutyPrefix = "";
     }
 
     public Player getPlayer() {
@@ -43,27 +43,7 @@ public class StaffType {
         this.isDuty = isDuty;
     }
 
-    public Collection<String> getPrefixes() {
-        return onDutyPrefix;
-    }
-
-    public String getPrefix(int idx) {
-        String[] prefixes = this.onDutyPrefix.toArray(new String[0]);
-
-        if (idx < 0 || prefixes == null) {
-            return "";
-        }
-
-        for (String prefix : prefixes) {
-            if (--idx < 0) {
-                return prefix;
-            }
-        }
-
-        return "";
-    }
-
-    public void setDisplayPrefixes(Collection<String> prefixes) {
+    public void setDisplayPrefixes(String prefixes) {
         this.onDutyPrefix = prefixes;
     }
 
@@ -76,6 +56,6 @@ public class StaffType {
     }
 
     public String getDutyPrefix() {
-        return String.join("", onDutyPrefix);
+        return onDutyPrefix;
     }
 }

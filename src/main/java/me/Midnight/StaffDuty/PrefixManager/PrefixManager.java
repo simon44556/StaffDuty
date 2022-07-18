@@ -46,18 +46,16 @@ public class PrefixManager {
         return finalMaping;
     }
 
-    public Collection<String> getChatPrefixes(Player p) {
+    public String getChatPrefixes(Player p) {
         User user = luckPerms.getUserManager().getUser(p.getUniqueId());
 
         if (user == null) {
-            return new ArrayList<>();
+            return "";
         }
 
-        return user.getCachedData().getMetaData().getPrefixes().values();
+        return user.getCachedData().getMetaData().getPrefix();
     }
 
-
-    
     private List<String> getAllTracks() {
         Set<Track> loadedTracks = luckPerms.getTrackManager().getLoadedTracks();
         List<String> tracksAsString;
